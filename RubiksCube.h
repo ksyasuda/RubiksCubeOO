@@ -10,6 +10,8 @@ public:
 
     void printCube();
 
+    void menu();
+
 private:
     int cube[6][3][3];
 };

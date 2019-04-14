@@ -120,3 +120,6 @@ void RubiksCube::printCube(){
 	}
 }
 
+void RubiksCube::menu(){
+	return;
+}
