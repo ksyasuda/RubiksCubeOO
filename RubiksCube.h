@@ -1,6 +1,6 @@
 #include <vector>
 
-class RubiksCube{
+class RubiksCube {
 public:
     RubiksCube();
 
@@ -11,6 +11,8 @@ public:
     void printCube();
 
     void menu();
+
+    void initFaces();
 
 private:
     int cube[6][3][3];
