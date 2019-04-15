@@ -3,7 +3,7 @@ CXX = g++
 CXXFLAGS = -Wall -Werror -pedantic --std=c++11 -g
 
 	
-RubiksCube.exe: RubiksCube.cpp main.cpp
+RubiksCube.exe: RubiksCube.cpp main.cpp Solver.cpp Cross.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 
