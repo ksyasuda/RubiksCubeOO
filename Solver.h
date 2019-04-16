@@ -17,6 +17,8 @@ public:
     bool whiteOnTop();
 
     void SecondLayer();
+
+    void topCross();
 private:
     std::string name;
 };

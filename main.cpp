@@ -13,10 +13,9 @@ int main()
     //solver->turnCube("U", true);
     solver->scrambleCube(25);
     //solver->printCube();
-    do{solver->Crosss();
-    } while(solver->getColor(5, 0, 1) != "white" or solver->getColor(5, 1, 0) != "white" or
-            solver->getColor(5, 1, 2) != "white" or solver->getColor(5, 2, 1) != "white");
+    solver->Crosss();
     solver->Corners();
-    do{solver->SecondLayer();}while(!solver->secondLayerCorrect());
+    solver->SecondLayer();
+    solver->topCross();
     return 0;
 }
