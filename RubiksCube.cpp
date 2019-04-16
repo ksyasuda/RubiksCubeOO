@@ -64,7 +64,7 @@ bool RubiksCube::secondLayerCorrect(){
 	if(getColor(1, 1, 0) != "blue" || getColor(1, 1, 2) != "blue" ||
 	   getColor(2, 1, 0) != "red" || getColor(2, 1, 2) != "red" ||
 	   getColor(3, 1, 0) != "green" || getColor(3, 1, 2) != "green" ||
-	   getColor(4, 0, 1) != "orange" || getColor(4, 0, 2) != "orange")
+	   getColor(4, 1, 0) != "orange" || getColor(4, 1, 2) != "orange")
 	   return false;
 	return true;
 }
