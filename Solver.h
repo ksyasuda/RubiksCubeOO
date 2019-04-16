@@ -11,6 +11,12 @@ public:
     Solver(std::string stage);
 
     void Crosss();
+
+    void Corners();
+
+    bool whiteOnTop();
+
+    void SecondLayer();
 private:
     std::string name;
 };

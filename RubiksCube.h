@@ -17,6 +17,16 @@ public:
 
     void turnCube(std::string move, bool print);
 
+    void scrambleCube(int num_scrambles);
+
+    std::string getColor(int x, int y, int z);
+
+    std::string getColor(int * ptr);
+
+    int* at(int x, int y, int z);
+
+    bool secondLayerCorrect();
+
     void B();
     void Bp();
     void D();

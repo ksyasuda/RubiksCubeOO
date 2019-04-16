@@ -1,5 +1,9 @@
 #include <iostream>
 #include "RubiksCube.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <vector>
 
 //colored numbers
 constexpr auto RED2 = "\033[31m";
@@ -37,6 +41,53 @@ RubiksCube::RubiksCube(const RubiksCube &other){
             }
         }
     }
+}
+
+void RubiksCube::scrambleCube(int val) {
+	std::vector<std::string> vect = { "R", "Rp", "U", "Up", "L", "Lp", "F", "Fp", "D", "Dp", "B", "Bp" };
+	srand (time(NULL));
+	int random;
+	std::string move;
+	for(int i = 0; i < val; i++) {
+		random = rand() % 12;
+		move = vect.at(random);
+		//add the if delay here
+		turnCube(move, true);
+	}
+}
+
+int* RubiksCube::at(int x, int y, int z){
+	return &cube[x][y][z];
+}
+
+bool RubiksCube::secondLayerCorrect(){
+	if(getColor(1, 1, 0) != "blue" || getColor(1, 1, 2) != "blue" ||
+	   getColor(2, 1, 0) != "red" || getColor(2, 1, 2) != "red" ||
+	   getColor(3, 1, 0) != "green" || getColor(3, 1, 2) != "green" ||
+	   getColor(4, 0, 1) != "orange" || getColor(4, 0, 2) != "orange")
+	   return false;
+	return true;
+}
+
+std::string RubiksCube::getColor(int x, int y, int z){
+	if(cube[x][y][z] >= 0 and cube[x][y][z] <= 8) return "yellow";
+	else if(cube[x][y][z] >= 9 and cube[x][y][z] <= 17) return "blue";
+	else if(cube[x][y][z] >= 18 and cube[x][y][z] <= 26) return "red";
+	else if(cube[x][y][z] >= 27 and cube[x][y][z] <= 35) return "green";
+	else if(cube[x][y][z] >= 36 and cube[x][y][z] <= 44) return "orange";
+	else if(cube[x][y][z] >= 45 and cube[x][y][z] <= 53) return "white";
+	return "this should never happen only here to avoid compile error";
+}
+
+
+std::string RubiksCube::getColor(int * pos){
+	if(*pos >= 0 and *pos <= 8) return "yellow";
+	else if(*pos >= 9 and *pos <= 17) return "blue";
+	else if(*pos >= 18 and *pos <= 26) return "red";
+	else if(*pos >= 27 and *pos <= 35) return "green";
+	else if(*pos >= 36 and *pos <= 44) return "orange";
+	else if(*pos >= 45 and *pos <= 53) return "white";
+	return "this should never happen only here to avoid compile error";
 }
 
 void RubiksCube::initCube(){
