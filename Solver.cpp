@@ -118,8 +118,8 @@ void Solver::Crosss() {
 		else if (getColor( 5, 1, 0) == "white" && getColor( 1, 2, 1) != "blue") { turnCube("L", t); turnCube("L", t); }
 		else if (getColor( 5, 1, 2) == "white" && getColor( 3, 2, 1) != "green") { turnCube("R", t); turnCube("R", t); }
 		else if (getColor( 5, 2, 1) == "white" && getColor( 4, 2, 1) != "orange") { turnCube("B", t); turnCube("B", t); }
-	} while(getColor(5, 0, 1) != "white" or getColor(5, 1, 0) != "white" or
-            getColor(5, 1, 2) != "white" or getColor(5, 2, 1) != "white");
+	} while(getColor(5, 0, 1) != "white" || getColor(5, 1, 0) != "white" ||
+            getColor(5, 1, 2) != "white" || getColor(5, 2, 1) != "white");
 }
 
 bool Solver::whiteOnTop() {
@@ -177,14 +177,14 @@ void Solver::SecondLayer()
 		if (getColor(green) == "yellow") count++;
 		//this is the problem rn  goes into infinite loop //fixed
 		if (count >= 4 and !secondLayerCorrect()){
-			if (getColor(2,1,2) != "red" or getColor(3,1,0) != "green") {
+			if (getColor(2,1,2) != "red" || getColor(3,1,0) != "green") {
 				turnCube("U", g); turnCube("R", g); turnCube("Up", g); turnCube("Rp", g); turnCube("Up", g);
 				turnCube("Fp", g); turnCube("U", g); turnCube("F", g);
 			}
-			else if (getColor(1,1,2) != "blue" or getColor(2,1,0) != "red") {
+			else if (getColor(1,1,2) != "blue" || getColor(2,1,0) != "red") {
 				turnCube("Up", g); turnCube("Lp", g); turnCube("U", g); turnCube("L", g); turnCube("U", g); turnCube("F", g); turnCube("Up", g); turnCube("Fp", g);
 			}
-			else if (getColor(3,1,2) != "green" or getColor(4,1,0) != "orange") {
+			else if (getColor(3,1,2) != "green" || getColor(4,1,0) != "orange") {
 				turnCube("U", g); turnCube("B", g); turnCube("Up", g); turnCube("Bp", g); turnCube("Up", g);
 				turnCube("Rp", g); turnCube("U", g); turnCube("R", g);
 			}
@@ -237,24 +237,24 @@ void Solver::Corners()
 		//if there is a white piece in botom layer but is not oriented correctly, bring back into top layer to be inserted
 		if (!whiteOnTop())
 		{
-			if (getColor(5, 0, 0) == "white" or getColor(5, 0, 2) == "white" or getColor(5, 2, 0) == "white" or getColor(5, 2, 2) == "white" or
-				getColor(1,2,0) == "white" or getColor(1, 2, 2) == "white" or getColor(2,2,0) == "white" or getColor(2,2,2) == "white" or
-				getColor(3,2,0) == "white" or getColor(3,2,2) == "white" or getColor(4,2,0) == "white" or getColor(4,2,2) == "white") {
-				if ((getColor(2, 2, 2) == "white" or getColor(3, 2, 0) == "white" or getColor(5, 0, 2) == "white") && (getColor(2, 2, 2) != "red" or getColor(3, 2, 0) != "green" or getColor(5,0,2) != "white")) {
-					turnCube("R", g); turnCube("U", g); turnCube("Rp", g);
+			if (getColor(5, 0, 0) == "white" || getColor(5, 0, 2) == "white" || getColor(5, 2, 0) == "white" || getColor(5, 2, 2) == "white" ||
+				getColor(1,2,0) == "white" || getColor(1, 2, 2) == "white" || getColor(2,2,0) == "white" || getColor(2,2,2) == "white" ||
+				getColor(3,2,0) == "white" || getColor(3,2,2) == "white" || getColor(4,2,0) == "white" || getColor(4,2,2) == "white") {
+				if ((getColor(2, 2, 2) == "white" || getColor(3, 2, 0) == "white" || getColor(5, 0, 2) == "white") && (getColor(2, 2, 2) != "red" || getColor(3, 2, 0) != "green" || getColor(5,0,2) != "white")) {
+					turnCube("R", g); turnCube("Up", g); turnCube("Rp", g);
 				}
-				else if ((getColor(2, 2, 0) == "white" or getColor(1, 2, 2) == "white" or getColor(5, 0, 0) == "white") && (getColor(2, 2, 0) != "red" or getColor(1, 2, 2) != "blue" or getColor(5,0,0) != "white")) {
-					turnCube("Lp", g); turnCube("U", g); turnCube("L", g);
+				else if ((getColor(2, 2, 0) == "white" || getColor(1, 2, 2) == "white" || getColor(5, 0, 0) == "white") && (getColor(2, 2, 0) != "red" || getColor(1, 2, 2) != "blue" || getColor(5,0,0) != "white")) {
+					turnCube("Lp", g); turnCube("Up", g); turnCube("L", g);
 				}
-				else if ((getColor(1, 2, 0) == "white" or getColor(4, 2, 2) == "white" or getColor(5, 2, 0) == "white") && (getColor(1, 2, 0) != "blue" or getColor(4, 2, 2) != "orange" or getColor(5,0,2) != "white")) {
-					turnCube("L", g); turnCube("U", g); turnCube("Lp", g);
+				else if ((getColor(1, 2, 0) == "white" || getColor(4, 2, 2) == "white" || getColor(5, 2, 0) == "white") && (getColor(1, 2, 0) != "blue" || getColor(4, 2, 2) != "orange" || getColor(5,0,2) != "white")) {
+					turnCube("L", g); turnCube("Up", g); turnCube("Lp", g);
 				}
-				else if ((getColor(3, 2, 2) == "white" or getColor(4, 2, 0) == "white" or getColor(5, 2, 2) == "white") && (getColor(3, 2, 2) != "green" or getColor(4, 2, 0) != "orange" or getColor(5,2,2) != "white")) {
+				else if ((getColor(3, 2, 2) == "white" || getColor(4, 2, 0) == "white" || getColor(5, 2, 2) == "white") && (getColor(3, 2, 2) != "green" || getColor(4, 2, 0) != "orange" || getColor(5,2,2) != "white")) {
 					turnCube("Rp", g); turnCube("U", g); turnCube("R", g);
 				}
 			}
 		}
-		turnCube("U", true);
+		turnCube("Up", true);
 	} while (!(getColor(5, 0, 0) == "white" && getColor(5, 0, 2) == "white" && getColor(5, 2, 0) == "white" && getColor(5, 2, 2) == "white" && getColor(2,2,0) == "red" && getColor(2,2,2) == "red" &&
 			   getColor(1,2,0) == "blue" && getColor(1,2,2) == "blue" && getColor(3,2,0) == "green" && getColor(3,2,2) == "green" && getColor(4,2,0) == "orange" && getColor(4,2,2) == "orange"));
 }
