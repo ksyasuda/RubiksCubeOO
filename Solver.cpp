@@ -8,7 +8,7 @@ Solver::Solver(std::string stage){
     name = stage;
 }
 
-bool Solver::isSolverd()
+bool Solver::isSolved()
 {
 	return false;
 }
@@ -20,13 +20,13 @@ bool Solver::isSolverd()
 //make debug booleans that will be configured from main or something
 void Solver::pll()
 {
-	if (is_solved(cube))
+	if (isSolved())
 		return;
-	else if (!is_solved(cube))
+	else if (!isSolved())
 	{
 		for (int g = 0; g < 3; g++)
 		{
-			if (is_solved(cube))
+			if (isSolved())
 			{
 				return;
 			}
@@ -62,14 +62,14 @@ void Solver::pll()
 		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) != check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) != check_color(&cube[2][0][0]) && !has_bar(cube))
 	{
 		Z_perm(cube);
-		if (!is_solved(cube) && !top_layer_right(cube))
+		if (!isSolved() && !top_layer_right(cube))
 		{
 			H_perm(cube);
 		}
-		if (!is_solved(cube) && top_layer_right(cube))
+		if (!isSolved() && top_layer_right(cube))
 		{
 			auf(cube);
-			if (is_solved(cube)) return;
+			if (isSolved()) return;
 		}
 	}
 	//if top is z perm.  green || blue needs to be on [0][1] position on red face
@@ -85,11 +85,11 @@ void Solver::pll()
 		T_perm(cube);
 	}
 	//check if solved, if needs u perm, if needs h || z perm after initial t perm
-	if (is_solved(cube))
+	if (isSolved())
 		return;
 	for (int g = 0; g < 3; g++)
 	{
-		if (is_solved(cube))
+		if (isSolved())
 		{
 			return;
 		}
@@ -122,14 +122,14 @@ void Solver::pll()
 		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) != check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) != check_color(&cube[2][0][0]) && !has_bar(cube))
 	{
 		Z_perm(cube);
-		if (!is_solved(cube) && !top_layer_right(cube))
+		if (!isSolved() && !top_layer_right(cube))
 		{
 			H_perm(cube);
 		}
-		if (!is_solved(cube) && top_layer_right(cube))
+		if (!isSolved() && top_layer_right(cube))
 		{
 			auf(cube);
-			if (is_solved(cube)) return;
+			if (isSolved()) return;
 		}
 	}
 	//if top is z perm.  green || blue needs to be on [0][1] position on red face
@@ -150,13 +150,13 @@ void Solver::pll()
 	T_perm(cube);
 	if (cfop_delay)
 		delay();
-	if (is_solved(cube))
+	if (isSolved())
 	{
 		return;
 	}
-	else if (!is_solved(cube) && top_layer_right(cube))
+	else if (!isSolved() && top_layer_right(cube))
 	{
-		auf(cube); if (is_solved(cube)) return;
+		auf(cube); if (isSolved()) return;
 	}
 	if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
 		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) == check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) == check_color(&cube[2][0][0]) && !has_bar(cube))
@@ -167,14 +167,14 @@ void Solver::pll()
 		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) != check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) != check_color(&cube[2][0][0]) && !has_bar(cube))
 	{
 		Z_perm(cube);
-		if (!is_solved(cube) && !top_layer_right(cube))
+		if (!isSolved() && !top_layer_right(cube))
 		{
 			H_perm(cube);
 		}
-		if (!is_solved(cube) && top_layer_right(cube))
+		if (!isSolved() && top_layer_right(cube))
 		{
 			auf(cube);
-			if (is_solved(cube)) return;
+			if (isSolved()) return;
 		}
 	}
 	if (check_color(&cube[2][0][0]) == check_color(&cube[2][0][1]) && check_color(&cube[2][0][2]) == check_color(&cube[2][0][0])) {
