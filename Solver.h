@@ -16,9 +16,17 @@ public:
 
     bool whiteOnTop();
 
+    bool topCorrect();
+
+    bool isSolved();
+
     void SecondLayer();
 
     void topCross();
+
+    void oll();
+
+    void pll();
 private:
     std::string name;
 };
