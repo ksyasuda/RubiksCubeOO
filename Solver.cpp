@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
-#include "Solver.h"
+#include "Solver.h" 
+
+bool cfop_delay = true;
+bool turn_delay = true;
 
 Solver::Solver() :name("cross") {}
 
@@ -8,13 +11,91 @@ Solver::Solver(std::string stage){
     name = stage;
 }
 
+void Solver::delay()
+{
+    for(int i = 0; i < 10000; i++)
+        for(int j = 0; j < 100000; j++);
+}
+
 bool Solver::isSolved()
 {
+	if(topCorrect() && getColor(1, 0, 0) == getColor(1, 0, 1) && getColor(1, 0, 0) == getColor(1, 0, 2) && getColor(1, 0,0) == "blue" &&
+	   getColor(2, 0,0) == getColor(2, 0, 2) && getColor(2, 0,0) == getColor(2, 0, 2) && getColor(2, 0,0) == "red" &&
+	   getColor(3, 0, 0) == getColor(3,0,1) && getColor(3,0,0) == "green" &&
+	   getColor(4, 0,0) == getColor(4, 0, 1) && getColor(4, 0,0) == "orange")
+	   return true;
 	return false;
 }
 
+bool Solver::hasBar()
+{
+	if((getColor(1, 0, 0) == getColor(1,0,2) && getColor(1,0,0) == getColor(1,0,1)) ||
+	   (getColor(2, 0,0) == getColor(2,0,2) && getColor(2,0,0) == getColor(2,0,1)) ||
+	   (getColor(3,0,0) == getColor(3,0,2) && getColor(3,0,0) == getColor(3,0,1)) ||
+	   (getColor(4,0,0) == getColor(4,0,2) && getColor(4,0,0) == getColor(4,0,1)))
+	   return true;
+	return false;
+}
+
+bool Solver::topLayerCorrect()
+{
+	if(getColor(1, 0, 0) == getColor(1,0,2) && getColor(1,0,0) == getColor(1,0,1) &&
+	   getColor(2, 0,0) == getColor(2,0,2) && getColor(2,0,0) == getColor(2,0,1) &&
+	   getColor(3,0,0) == getColor(3,0,2) && getColor(3,0,0) == getColor(3,0,1) &&
+	   getColor(4,0,0) == getColor(4,0,2) && getColor(4,0,0) == getColor(4,0,1))
+	   return true;
+	return false;
+}
+
+void Solver::auf()
+{
+	if(topLayerCorrect() && !isSolved())
+	{
+		for(int i = 0; i < 3; i++)
+		{
+			if(isSolved())
+				return;
+			turnCube("U", true);
+		}
+	}
+	return;
+}
+
+void Solver::Ua_perm()
+{
+	turnCube("R", true); turnCube("Up", true); turnCube("R", true); turnCube("U", true); turnCube("R", true); turnCube("U", true); turnCube("R", true); turnCube("Up", true);
+	turnCube("Rp", true); turnCube("Up", true); turnCube("R", true); turnCube("R", true);
+}
+
+void Solver::Ub_perm()
+{
+	turnCube("R", true); turnCube("R", true); turnCube("U", true); turnCube("R", true); turnCube("U", true); turnCube("Rp", true); turnCube("Up", true); turnCube("Rp", true);
+	turnCube("Up", true); turnCube("Rp", true); turnCube("U", true); turnCube("Rp", true);
+}
+
+void Solver::H_perm()
+{
+	turnCube("M2", true); turnCube("U", true); turnCube("M2", true);
+	turnCube("U", true); turnCube("U", true); turnCube("M2", true);
+	turnCube("U", true); turnCube("M2", true);
+}
+
+void Solver::Z_perm()
+{
+	turnCube("M2", true); turnCube("U", true); turnCube("M2", true);
+	turnCube("U", true); turnCube("Mp", true); turnCube("U", true);
+	turnCube("U", true); turnCube("M2", true); turnCube("U", true);
+	turnCube("U", true); turnCube("Mp", true); turnCube("U", true); turnCube("U", true);
+}
+
+void Solver::T_perm()
+{
+	turnCube("R", true); turnCube("U", true); turnCube("Rp", true); turnCube("Up", true); turnCube("Rp", true); turnCube("F", true); turnCube("R", true);
+	turnCube("R", true); turnCube("Up", true); turnCube("Rp", true); turnCube("Up", true); turnCube("R", true); turnCube("U", true); turnCube("Rp", true); turnCube("Fp", true);
+}
+
 //need to do
-//change all check_color to getColor
+//change all check_color to getColor 
 //change all turn_cube to turnCube
 //make is_solved, has_bar, auf, and pll algs
 //make debug booleans that will be configured from main or something
@@ -30,45 +111,45 @@ void Solver::pll()
 			{
 				return;
 			}
-			if (has_bar(cube) && check_color(&cube[2][0][0]) != check_color(&cube[2][0][1]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[1][0][0]) != check_color(&cube[1][0][1]) && check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[3][0][0]) != check_color(&cube[3][0][1]) && check_color(&cube[4][0][0]) == check_color(&cube[4][0][1])
-				&& check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]))
+			if (hasBar() && getColor(2,0,0) != getColor(2,0,1) && getColor(2,0,0) == getColor(2,0,2) && getColor(1,0,0) != getColor(1,0,1) && getColor(1,0,0) == getColor(1,0,2) && getColor(3,0,0) != getColor(3,0,1) && getColor(4,0,0) == getColor(4,0,1)
+				&& getColor(4,0,0) == getColor(4,0,2))
 			{
-				if (check_color(&cube[3][0][1]) == check_color(&cube[1][0][0]) && check_color(&cube[1][0][1]) ==
-					check_color(&cube[2][0][0]))
+				if (getColor(3,0,1) == getColor(1,0,0) && getColor(1,0,1) ==
+					getColor(2,0,0))
 				{
 					if (cfop_delay)
 						delay();
-					Ua_perm(cube);
+					Ua_perm();
 				}
 				else
 				{
 					if (cfop_delay)
 						delay();
-					Ub_perm(cube);
+					Ub_perm();
 				}
 				return;
 			}
-			turn_cube(cube, "U", true);
+			turnCube("U", true);
 		}
 	}
 	//need to account for if alredy solved && ohly need u perm || ua perm
 	//if top is h perm.  do u perm u u perm up && auf
-	if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) == check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) == check_color(&cube[2][0][0]) && !has_bar(cube))
+	if (getColor(1,0,0) == getColor(1,0,2) && getColor(2,0,0) == getColor(2,0,2) && getColor(3,0,0) == getColor(3,0,2) &&
+		getColor(4,0,0) == getColor(4,0,2) && getColor(2,0,1) == getColor(4,0,0) && getColor(4,0,1) == getColor(2,0,0) && !hasBar())
 	{
-		H_perm(cube);
+		H_perm();
 	}
-	else if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) != check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) != check_color(&cube[2][0][0]) && !has_bar(cube))
+	else if (getColor(1,0,0) == getColor(1,0,2) && getColor(2,0,0) == getColor(2,0,2) && getColor(3,0,0) == getColor(3,0,2) &&
+		getColor(4,0,0) == getColor(4,0,2) && getColor(2,0,1) != getColor(4,0,0) && getColor(4,0,1) != getColor(2,0,0) && !hasBar())
 	{
-		Z_perm(cube);
-		if (!isSolved() && !top_layer_right(cube))
+		Z_perm();
+		if (!isSolved() && !topLayerCorrect())
 		{
-			H_perm(cube);
+			H_perm();
 		}
-		if (!isSolved() && top_layer_right(cube))
+		if (!isSolved() && topLayerCorrect())
 		{
-			auf(cube);
+			auf();
 			if (isSolved()) return;
 		}
 	}
@@ -77,12 +158,12 @@ void Solver::pll()
 
 
 	//if no headlights just do t perm from any orientation
-	if (check_color(&cube[2][0][0]) != check_color(&cube[2][0][2]) &&
-		check_color(&cube[3][0][0]) != check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) != check_color(&cube[4][0][2]) &&
-		check_color(&cube[1][0][0]) != check_color(&cube[1][0][2]))
+	if (getColor(2,0,0) != getColor(2,0,2) &&
+		getColor(3,0,0) != getColor(3,0,2) &&
+		getColor(4,0,0) != getColor(4,0,2) &&
+		getColor(1,0,0) != getColor(1,0,2))
 	{
-		T_perm(cube);
+		T_perm();
 	}
 	//check if solved, if needs u perm, if needs h || z perm after initial t perm
 	if (isSolved())
@@ -93,110 +174,110 @@ void Solver::pll()
 		{
 			return;
 		}
-		if (has_bar(cube) && check_color(&cube[2][0][0]) != check_color(&cube[2][0][1]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[1][0][0]) != check_color(&cube[1][0][1]) && check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[3][0][0]) != check_color(&cube[3][0][1]) && check_color(&cube[4][0][0]) == check_color(&cube[4][0][1])
-			&& check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]))
+		if (hasBar() && getColor(2,0,0) != getColor(2,0,1) && getColor(2,0,0) == getColor(2,0,2) && getColor(1,0,0) != getColor(1,0,1) && getColor(1,0,0) == getColor(1,0,2) && getColor(3,0,0) != getColor(3,0,1) && getColor(4,0,0) == getColor(4,0,1)
+			&& getColor(4,0,0) == getColor(4,0,2))
 		{
-			if (check_color(&cube[3][0][1]) == check_color(&cube[1][0][0]) && check_color(&cube[1][0][1]) ==
-				check_color(&cube[2][0][0]))
+			if (getColor(3,0,1) == getColor(1,0,0) && getColor(1,0,1) ==
+				getColor(2,0,0))
 			{
 				if (cfop_delay)
 					delay();
-				Ua_perm(cube);
+				Ua_perm();
 			}
 			else
 			{
 				if (cfop_delay)
 					delay();
-				Ub_perm(cube);
+				Ub_perm();
 			}
 			return;
 		}
-		turn_cube(cube, "U", true);
+		turnCube("U", true);
 	}
-	if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) == check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) == check_color(&cube[2][0][0]) && !has_bar(cube))
+	if (getColor(1,0,0) == getColor(1,0,2) && getColor(2,0,0) == getColor(2,0,2) && getColor(3,0,0) == getColor(3,0,2) &&
+		getColor(4,0,0) == getColor(4,0,2) && getColor(2,0,1) == getColor(4,0,0) && getColor(4,0,1) == getColor(2,0,0) && !hasBar())
 	{
-		H_perm(cube);
+		H_perm();
 	}
-	else if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) != check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) != check_color(&cube[2][0][0]) && !has_bar(cube))
+	else if (getColor(1,0,0) == getColor(1,0,2) && getColor(2,0,0) == getColor(2,0,2) && getColor(3,0,0) == getColor(3,0,2) &&
+		getColor(4,0,0) == getColor(4,0,2) && getColor(2,0,1) != getColor(4,0,0) && getColor(4,0,1) != getColor(2,0,0) && !hasBar())
 	{
-		Z_perm(cube);
-		if (!isSolved() && !top_layer_right(cube))
+		Z_perm();
+		if (!isSolved() && !topLayerCorrect())
 		{
-			H_perm(cube);
+			H_perm();
 		}
-		if (!isSolved() && top_layer_right(cube))
+		if (!isSolved() && topLayerCorrect())
 		{
-			auf(cube);
+			auf();
 			if (isSolved()) return;
 		}
 	}
 	//if top is z perm.  green || blue needs to be on [0][1] position on red face
 	//then u perm.  turn so block is on orange side uperm .  if not solved another u perm && auf.
-	if (check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]))
+	if (getColor(2,0,0) == getColor(2,0,2))
 	{
-		turn_cube(cube, "U", true);
+		turnCube("U", true);
 	}
-	else if (check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]))
+	else if (getColor(3,0,0) == getColor(3,0,2))
 	{
-		turn_cube(cube, "U", true); turn_cube(cube, "U", true);
+		turnCube("U", true); turnCube("U", true);
 	}
-	else if (check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]))
+	else if (getColor(4,0,0) == getColor(4,0,2))
 	{
-		turn_cube(cube, "Up", true);
+		turnCube("Up", true);
 	}
 	//r u rp up rp f r r up rp up r u rp fp
-	T_perm(cube);
+	T_perm();
 	if (cfop_delay)
 		delay();
 	if (isSolved())
 	{
 		return;
 	}
-	else if (!isSolved() && top_layer_right(cube))
+	else if (!isSolved() && topLayerCorrect())
 	{
-		auf(cube); if (isSolved()) return;
+		auf(); if (isSolved()) return;
 	}
-	if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) == check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) == check_color(&cube[2][0][0]) && !has_bar(cube))
+	if (getColor(1,0,0) == getColor(1,0,2) && getColor(2,0,0) == getColor(2,0,2) && getColor(3,0,0) == getColor(3,0,2) &&
+		getColor(4,0,0) == getColor(4,0,2) && getColor(2,0,1) == getColor(4,0,0) && getColor(4,0,1) == getColor(2,0,0) && !hasBar())
 	{
-		H_perm(cube);
+		H_perm();
 	}
-	else if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2]) &&
-		check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]) && check_color(&cube[2][0][1]) != check_color(&cube[4][0][0]) && check_color(&cube[4][0][1]) != check_color(&cube[2][0][0]) && !has_bar(cube))
+	else if (getColor(1,0,0) == getColor(1,0,2) && getColor(2,0,0) == getColor(2,0,2) && getColor(3,0,0) == getColor(3,0,2) &&
+		getColor(4,0,0) == getColor(4,0,2) && getColor(2,0,1) != getColor(4,0,0) && getColor(4,0,1) != getColor(2,0,0) && !hasBar())
 	{
-		Z_perm(cube);
-		if (!isSolved() && !top_layer_right(cube))
+		Z_perm();
+		if (!isSolved() && !topLayerCorrect())
 		{
-			H_perm(cube);
+			H_perm();
 		}
-		if (!isSolved() && top_layer_right(cube))
+		if (!isSolved() && topLayerCorrect())
 		{
-			auf(cube);
+			auf();
 			if (isSolved()) return;
 		}
 	}
-	if (check_color(&cube[2][0][0]) == check_color(&cube[2][0][1]) && check_color(&cube[2][0][2]) == check_color(&cube[2][0][0])) {
-		turn_cube(cube, "U", true); turn_cube(cube, "U", true);
+	if (getColor(2,0,0) == getColor(2,0,1) && getColor(2,0,2) == getColor(2,0,0)) {
+		turnCube("U", true); turnCube("U", true);
 	}
-	else if (check_color(&cube[1][0][0]) == check_color(&cube[1][0][1]) && check_color(&cube[1][0][0]) == check_color(&cube[1][0][2])) { turn_cube(cube, "U", true); }
-	else if (check_color(&cube[3][0][0]) == check_color(&cube[3][0][1]) && check_color(&cube[3][0][0]) == check_color(&cube[3][0][2])) { turn_cube(cube, "Up", true); }
-	if (has_bar(cube) && check_color(&cube[2][0][0]) != check_color(&cube[2][0][1]) && check_color(&cube[2][0][0]) == check_color(&cube[2][0][2]) && check_color(&cube[1][0][0]) != check_color(&cube[1][0][1]) && check_color(&cube[1][0][0]) == check_color(&cube[1][0][2]) && check_color(&cube[3][0][0]) != check_color(&cube[3][0][1]) && check_color(&cube[4][0][0]) == check_color(&cube[4][0][1])
-		&& check_color(&cube[4][0][0]) == check_color(&cube[4][0][2]))
+	else if (getColor(1,0,0) == getColor(1,0,1) && getColor(1,0,0) == getColor(1,0,2)) { turnCube("U", true); }
+	else if (getColor(3,0,0) == getColor(3,0,1) && getColor(3,0,0) == getColor(3,0,2)) { turnCube("Up", true); }
+	if (hasBar() && getColor(2,0,0) != getColor(2,0,1) && getColor(2,0,0) == getColor(2,0,2) && getColor(1,0,0) != getColor(1,0,1) && getColor(1,0,0) == getColor(1,0,2) && getColor(3,0,0) != getColor(3,0,1) && getColor(4,0,0) == getColor(4,0,1)
+		&& getColor(4,0,0) == getColor(4,0,2))
 	{
-		if (check_color(&cube[3][0][1]) == check_color(&cube[1][0][0]) && check_color(&cube[1][0][1]) ==
-			check_color(&cube[2][0][0]))
+		if (getColor(3,0,1) == getColor(1,0,0) && getColor(1,0,1) ==
+			getColor(2,0,0))
 		{
 			if (cfop_delay)
 				delay();
-			Ua_perm(cube);
+			Ua_perm();
 		}
 		else
 		{
 			if (cfop_delay)
 				delay();
-			Ub_perm(cube);
+			Ub_perm();
 		}
 		return;
 	}
@@ -513,16 +594,16 @@ void Solver::Corners()
 				getColor(1,2,0) == "white" || getColor(1, 2, 2) == "white" || getColor(2,2,0) == "white" || getColor(2,2,2) == "white" ||
 				getColor(3,2,0) == "white" || getColor(3,2,2) == "white" || getColor(4,2,0) == "white" || getColor(4,2,2) == "white") {
 				if ((getColor(2, 2, 2) == "white" || getColor(3, 2, 0) == "white" || getColor(5, 0, 2) == "white") && (getColor(2, 2, 2) != "red" || getColor(3, 2, 0) != "green" || getColor(5,0,2) != "white")) {
-					turnCube("R", g); turnCube("Up", g); turnCube("Rp", g);
+					turnCube("R", g); turnCube("Up", g); turnCube("Up", g); turnCube("Rp", g);
 				}
 				else if ((getColor(2, 2, 0) == "white" || getColor(1, 2, 2) == "white" || getColor(5, 0, 0) == "white") && (getColor(2, 2, 0) != "red" || getColor(1, 2, 2) != "blue" || getColor(5,0,0) != "white")) {
-					turnCube("Lp", g); turnCube("Up", g); turnCube("L", g);
+					turnCube("Lp", g); turnCube("Up", g); turnCube("Up", g); turnCube("L", g);
 				}
 				else if ((getColor(1, 2, 0) == "white" || getColor(4, 2, 2) == "white" || getColor(5, 2, 0) == "white") && (getColor(1, 2, 0) != "blue" || getColor(4, 2, 2) != "orange" || getColor(5,0,2) != "white")) {
-					turnCube("L", g); turnCube("Up", g); turnCube("Lp", g);
+					turnCube("L", g); turnCube("Up", g); turnCube("Up", g); turnCube("Lp", g);
 				}
 				else if ((getColor(3, 2, 2) == "white" || getColor(4, 2, 0) == "white" || getColor(5, 2, 2) == "white") && (getColor(3, 2, 2) != "green" || getColor(4, 2, 0) != "orange" || getColor(5,2,2) != "white")) {
-					turnCube("Rp", g); turnCube("U", g); turnCube("R", g);
+					turnCube("Rp", g); turnCube("U", g); turnCube("U", g); turnCube("R", g);
 				}
 			}
 		}

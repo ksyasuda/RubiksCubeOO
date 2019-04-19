@@ -10,7 +10,7 @@ int main()
     //testing
     Solver* solver = new Solver("cross");
     //int choice = cube.menu();
-    for(int i = 0; i < 10; i++){
+    for(int i = 0; i < 5; i++){
     solver->initCube();
     solver->printCube();
     //solver->printCube();
@@ -22,6 +22,9 @@ int main()
     solver->SecondLayer();
     solver->topCross();
     solver->oll();
+    solver->pll();
+    if(!solver->isSolved())
+        solver->auf();
     delay();
     }
     return 0;

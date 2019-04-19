@@ -19,6 +19,12 @@ public:
     bool topCorrect();
 
     bool isSolved();
+    
+    bool hasBar();
+
+    bool topLayerCorrect();
+
+    void auf();
 
     void SecondLayer();
 
@@ -27,6 +33,14 @@ public:
     void oll();
 
     void pll();
+
+    void delay();
+
+    void Ua_perm();
+    void Ub_perm();
+    void H_perm();
+    void Z_perm();
+    void T_perm();
 private:
     std::string name;
 };
