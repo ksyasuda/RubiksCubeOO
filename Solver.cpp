@@ -2,13 +2,21 @@
 #include <string>
 #include "Solver.h" 
 
-bool cfop_delay = true;
-bool turn_delay = true;
+bool cfop_delay = false;
+bool turn_delay = false;
 
 Solver::Solver() :name("cross") {}
 
 Solver::Solver(std::string stage){
     name = stage;
+}
+
+void Solver::setDelay(std::string type, bool delay_)
+{	
+	if(type == "cfop" && delay_)
+		cfop_delay = true;
+	if(type == "turn" && delay_)
+		turn_delay = true;
 }
 
 void Solver::delay()

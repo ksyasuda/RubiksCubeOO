@@ -36,6 +36,8 @@ public:
 
     void delay();
 
+    void setDelay(std::string type, bool delay_);
+
     void Ua_perm();
     void Ub_perm();
     void H_perm();
